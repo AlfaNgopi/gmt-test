@@ -21,7 +21,8 @@
     <div class="w-100">
 
 
-        <form class="mt-5 mb-3" action="{{route('addBook')}}" method="post">
+        <form class="mt-5 mb-3" action="{{route('create')}}" method="post">
+            @csrf
             <div class="row">
                 <div class="col-4">
                     title
@@ -37,17 +38,17 @@
                     kategori
                     <select name="category_id" id="category_id">
                         @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>\
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="col-4">
                     stock
-                    <input name="stock" id="stock" type="text">
+                    <input name="stock" id="stock" type="number">
                 </div>
 
-                
+
 
                 <button type="submit" class="btn btn-success"> tambah buku </button>
             </div>
@@ -73,8 +74,23 @@
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->category->name }}</td>
                         <td>{{ $book->stock }}</td>
-                        <td>bentar</td>
+                        <td>
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUpdate{{ $book->id }}">edit</button>
+                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $book->id }}">delete</button>
+
+                        </td>
                     </tr>
+                    @include('partial/modalUpdate', [
+                    'id' => $book->id,
+                    'title' => $book->title,
+                    'author' => $book->author,
+                    'category_id' => $book->category_id,
+                    'stock' => $book->stock
+                    ])
+                    @include('partial/modalDelete', [
+                    'id' => $book->id
+
+                    ])
 
                     @endforeach
                 </tbody>
@@ -83,5 +99,6 @@
     </div>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </html>

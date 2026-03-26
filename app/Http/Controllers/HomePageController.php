@@ -45,7 +45,7 @@ class HomePageController extends Controller
     }
 
     //CRUD
-    public function update(Request $request, string $id):RedirectResponse
+    public function update(Request $request):RedirectResponse
     {
         $storedata = [
             'title' => $request->input('title'),
@@ -65,15 +65,15 @@ class HomePageController extends Controller
             return redirect()->back()->withErrors($validate)->withInput();
         }
 
-        Books::where('id', $id)->update($storedata);
+        Books::where('id', $request->input('id'))->update($storedata);
 
         return redirect()->back()->withSuccess("buku telah diupdate");
     }
 
-    public function delete(Request $request, string $id):RedirectResponse
+    public function delete(Request $request):RedirectResponse
     {
         
-        Books::where('id', $id)->delete();
+        Books::where('id', $request->input('id'))->delete();
 
         return redirect()->back()->withSuccess("buku telah dihapus");
     }
