@@ -55,6 +55,20 @@
 
         </form>
 
+        <!-- response card -->
+        @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        {{-- Exception/Error Message --}}
+        @if (session('errors'))
+        <div class="alert alert-danger">
+            {{ session('errors') }}
+        </div>
+        @endif
+
         <div class="container">
             <table class="table table-bordered mt-2">
                 <thead>
